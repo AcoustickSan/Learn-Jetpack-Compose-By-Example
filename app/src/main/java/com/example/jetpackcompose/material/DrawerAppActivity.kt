@@ -8,15 +8,14 @@ import androidx.compose.state
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Box
-import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.ContentGravity
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.clickable
 import androidx.ui.graphics.Color
 import androidx.ui.layout.Column
 import androidx.ui.layout.fillMaxSize
 import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.offset
 import androidx.ui.layout.padding
 import androidx.ui.material.DrawerState
 import androidx.ui.material.IconButton
@@ -105,18 +104,19 @@ fun DrawerContentComponent(
     Column(modifier = Modifier.fillMaxSize()) {
         // We want to have 3 rows in this column to represent the 3 screens in this activity.
         for (index in DrawerAppScreen.values().indices) {
-            // Clickable wraps the child composable and enables it to react to a click through the onClick
-            // callback similar to the onClick listener that we are accustomed to on Android.
+            // Box with clickable modifier wraps the child composable and enables it to react to a
+            // click through the onClick callback similar to the onClick listener that we are
+            // accustomed to on Android.
             // Here, we just update the currentScreen variable to hold the appropriate value based on
             // the row that is clicked i.e if the first row is clicked, we set the value of
             // currentScreen to DrawerAppScreen.Screen1, when second row is clicked we set it to
             // DrawerAppScreen.Screen2 and so on and so forth.
             val screen = getScreenBasedOnIndex(index)
-            Clickable(onClick = {
+            Box(Modifier.clickable(onClick = {
                 currentScreen.value = screen
                 // We also close the drawer when an option from the drawer is selected.
                 closeDrawer()
-            }) {
+            }), children = {
                 // Surface is a composable provided to fulfill the needs of the "Surface" metaphor from
                 // the Material Design specification. It's generally used to change the background
                 // color, add elevation, clip or add background shape to its children composables.
@@ -134,7 +134,7 @@ fun DrawerContentComponent(
                     // composable to render text on the screen
                     Text(text = screen.name, modifier = Modifier.padding(16.dp))
                 }
-            }
+            })
         }
     }
 }
@@ -201,7 +201,12 @@ fun Screen1Component(openDrawer: () -> Unit) {
         // You can think of Modifiers as implementations of the decorators pattern that are used to
         // modify the composable that its applied to.
         Surface(color = Color(0xFFffd7d7.toInt()), modifier = Modifier.weight(1f)) {
-            // Center is a composable that centers all the child composables that are passed to it.
+            // Box is a predefined convenience composable that allows you to apply common draw & layout
+            // logic. In addition we also pass a few modifiers to it.
+
+            // You can think of Modifiers as implementations of the decorators pattern that are used to
+            // modify the composable that its applied to. In the example below, we configure the
+            // Box to occupy the entire available height & width using Modifier.fillMaxSize().
             Box(modifier = Modifier.fillMaxSize(), gravity = ContentGravity.Center, children = {
                 Text(text = "Screen 1")
             })
@@ -240,7 +245,12 @@ fun Screen2Component(openDrawer: () -> Unit) {
         // You can think of Modifiers as implementations of the decorators pattern that are used to
         // modify the composable that its applied to.
         Surface(color = Color(0xFFffe9d6.toInt()), modifier = Modifier.weight(1f)) {
-            // Center is a composable that centers all the child composables that are passed to it.
+            // Box is a predefined convenience composable that allows you to apply common draw & layout
+            // logic. In addition we also pass a few modifiers to it.
+
+            // You can think of Modifiers as implementations of the decorators pattern that are used to
+            // modify the composable that its applied to. In the example below, we configure the
+            // Box to occupy the entire available height & width using Modifier.fillMaxSize().
             Box(modifier = Modifier.fillMaxSize(), gravity = ContentGravity.Center, children = {
                 Text(text = "Screen 2")
             })
@@ -279,7 +289,12 @@ fun Screen3Component(openDrawer: () -> Unit) {
         // You can think of Modifiers as implementations of the decorators pattern that are used to
         // modify the composable that its applied to.
         Surface(color = Color(0xFFfffbd0.toInt()), modifier = Modifier.weight(1f)) {
-            // Center is a composable that centers all the child composables that are passed to it.
+            // Box is a predefined convenience composable that allows you to apply common draw & layout
+            // logic. In addition we also pass a few modifiers to it.
+
+            // You can think of Modifiers as implementations of the decorators pattern that are used to
+            // modify the composable that its applied to. In the example below, we configure the
+            // Box to occupy the entire available height & width using Modifier.fillMaxSize().
             Box(modifier = Modifier.fillMaxSize(), gravity = ContentGravity.Center, children = {
                 Text(text = "Screen 3")
             })
